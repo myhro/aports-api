@@ -1,0 +1,11 @@
+---
+version: "3.0"
+services:
+  db:
+    image: postgres:11-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - .:/app
+      - ./db:/var/lib/postgresql/data
+    working_dir: /app
