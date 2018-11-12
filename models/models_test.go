@@ -32,3 +32,24 @@ func TestGetOffset(t *testing.T) {
 		})
 	}
 }
+
+func TestReplaceWildcards(t *testing.T) {
+	table := []struct {
+		in   string
+		want string
+	}{
+		{"bash*", "bash%"},
+		{"*bash*", "%bash%"},
+		{"bas?", "bas_"},
+		{"?as?", "_as_"},
+	}
+
+	for _, tt := range table {
+		t.Run(tt.in, func(t *testing.T) {
+			got := replaceWildcards(tt.in)
+			if got != tt.want {
+				t.Errorf("got %v; want %v", got, tt.want)
+			}
+		})
+	}
+}

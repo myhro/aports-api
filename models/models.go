@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/url"
 	"strconv"
+	"strings"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/myhro/aports-api/common"
@@ -41,4 +42,10 @@ func getOffset(v url.Values) int {
 	}
 
 	return ResultsPerPage * (page - 1)
+}
+
+func replaceWildcards(s string) string {
+	s = strings.Replace(s, "*", "%", -1)
+	s = strings.Replace(s, "?", "_", -1)
+	return s
 }

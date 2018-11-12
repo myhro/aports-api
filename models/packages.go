@@ -73,8 +73,6 @@ func packagesWhere(params url.Values) map[string]interface{} {
 		"packages.arch":   params.Get("arch"),
 		"maintainer.name": params.Get("maintainer"),
 	}
-	whereParams["packages.name"] = strings.Replace(whereParams["packages.name"].(string), "*", "%", -1)
-	whereParams["packages.name"] = strings.Replace(whereParams["packages.name"].(string), "?", "_", -1)
 
 	for k := range whereParams {
 		if whereParams[k] == "" {
@@ -84,7 +82,8 @@ func packagesWhere(params url.Values) map[string]interface{} {
 		if strings.Contains(q, "=") || strings.Contains(q, "LIKE") {
 			q += " AND "
 		}
-		if strings.ContainsAny(whereParams[k].(string), "%_") {
+		if strings.ContainsAny(whereParams[k].(string), "*?") {
+			whereParams[k] = replaceWildcards(whereParams[k].(string))
 			q += fmt.Sprintf("%s LIKE :%s", k, k)
 		} else {
 			q += fmt.Sprintf("%s = :%s", k, k)
