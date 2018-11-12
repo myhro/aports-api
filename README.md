@@ -1,6 +1,8 @@
 Aports API
 ==========
 
+[![Build Status](https://travis-ci.org/myhro/aports-api.svg?branch=master)](https://travis-ci.org/myhro/aports-api)
+
 Alpine Linux package database API written in Go, inspired by [aports-turbo][aports-turbo].
 
 ## Database
