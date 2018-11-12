@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/url"
+	"sort"
 	"strings"
 )
 
@@ -74,7 +75,13 @@ func packagesWhere(params url.Values) map[string]interface{} {
 		"maintainer.name": params.Get("maintainer"),
 	}
 
+	keys := []string{}
 	for k := range whereParams {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	for _, k := range keys {
 		if whereParams[k] == "" {
 			delete(whereParams, k)
 			continue
