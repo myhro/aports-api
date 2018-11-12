@@ -11,6 +11,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
+const (
+	// ResultsPerPage defines how many results will be shown by default
+	ResultsPerPage = 50
+)
+
 func connect() *sqlx.DB {
 	dbURL := common.GetEnv("API_DB_URL", "postgres://postgres@localhost/aports?sslmode=disable")
 	db, err := sqlx.Connect("postgres", dbURL)
@@ -31,7 +36,9 @@ func getOffset(v url.Values) int {
 		log.Print(err)
 		return 0
 	}
+	if page < 1 {
+		return 0
+	}
 
-	results := 50
-	return results * (page - 1)
+	return ResultsPerPage * (page - 1)
 }
