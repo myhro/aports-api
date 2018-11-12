@@ -3,7 +3,7 @@ BINARY = aports-api
 .PHONY: db
 
 build:
-	go build -o $(BINARY)
+	go build -v -o $(BINARY)
 
 clean:
 	rm $(BINARY)
