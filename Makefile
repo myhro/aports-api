@@ -1,4 +1,6 @@
 BINARY = aports-api
+COVER_FILE = coverage.out
+COVER_REPORT = coverage.html
 
 .PHONY: db
 
@@ -6,7 +8,10 @@ build:
 	go build -v -o $(BINARY)
 
 clean:
-	rm $(BINARY)
+	rm -f $(BINARY) $(COVER_FILE) $(COVER_REPORT)
+
+coverage:
+	go tool cover -html $(COVER_FILE) -o $(COVER_REPORT)
 
 db:
 	docker-compose up -d db
@@ -22,3 +27,6 @@ lint:
 
 run:
 	go run main.go
+
+test:
+	go test -coverprofile $(COVER_FILE) ./...

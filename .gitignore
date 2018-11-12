@@ -1,3 +1,5 @@
 db/
 *.dump
 aports-api
+coverage.html
+coverage.out
